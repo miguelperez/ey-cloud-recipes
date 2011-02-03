@@ -154,7 +154,8 @@ node[:applications].each do |app_name,data|
       variables({
         :username => user[:username],
         :app_name => app_name,
-        :db_pass => user[:password]
+        :db_pass => user[:password],
+        :template => "template_postgis"
       })
       not_if do File.exists?("/data/#{app_name}/shared/config/#{prefix}database.yml") end
     end
