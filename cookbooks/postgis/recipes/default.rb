@@ -3,12 +3,46 @@
 # Recipe:: default
 #
 
+script "install GEOS" do
+  interpreter "bash"
+  user "root"
+  cwd "/tmp"
+  code <<-EOH
+  wget http://download.osgeo.org/geos/geos-3.2.2.tar.bz2
+  tar -xvjf geos-3.2.2.tar.bz2
+  cd geos-3.2.2
+  ./configure
+  make
+  make install
+  EOH
+  not_if "ls -la | grep geos-3.2.2"
+end
+
+script "install Proj4" do
+  interpreter "bash"
+  user "root"
+  cwd "/tmp"
+  code <<-EOH
+  wget ftp://ftp.remotesensing.org/proj/from_kai/PROJ.4.3.3.tar.gz
+  tar -xvzf PROJ.4.3.3
+  cd PROJ.4.3.3
+  ./configure
+  sh install
+  EOH
+  not_if "ls -la | grep PROJ.4.3.3"
+end
+
+execute "download postgis" do
+  command "cd /tmp && wget http://www.postgis.org/download/postgis-1.5.2.tar.gz"
+  action :run
+  not_if "ls -la | grep postgis-1.5.2"
+end
+
 script "install Postgis" do
   interpreter "bash"
   user "root"
   cwd "/tmp"
   code <<-EOH
-  wget http://www.postgis.org/download/postgis-1.5.2.tar.gz
   tar -xvzf postgis-1.5.2.tar.gz
   cd postgis-1.5.2
   ./configure
@@ -17,14 +51,17 @@ script "install Postgis" do
   EOH
 end
 
+execute "restart-postgres" do
+  command "/etc/init.d/postgresql-8.3 restart"
+  action :run
+  not_if "/etc/init.d/postgresql-8.3 status | grep -q start"
+end
+
 script "create Postgis template" do
   interpreter "bash"
   user "root"
   cwd "/tmp"
-  code <<-EOH
-  #start database
-  /etc/init.d/postgresql-8.3 start
-  
+  code <<-EOH  
   # Set postgis-1.5 path.
   POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
   
