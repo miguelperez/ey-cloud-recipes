@@ -42,3 +42,7 @@ script "install_postgis_and_create_postgis_template" do
   
   EOH
 end
+
+ey_cloud_report "postgis" do
+  message "Postgis installation finished"
+end
