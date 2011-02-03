@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 
-script "install_postgis_and_create_postgis_template" do
+script "install Postgis" do
   interpreter "bash"
   user "root"
   cwd "/tmp"
@@ -14,6 +14,16 @@ script "install_postgis_and_create_postgis_template" do
   ./configure
   make
   make install
+  EOH
+end
+
+script "create Postgis template" do
+  interpreter "bash"
+  user "root"
+  cwd "/tmp"
+  code <<-EOH
+  #start database
+  /etc/init.d/postgresql-8.3 start
   
   # Set postgis-1.5 path.
   POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
