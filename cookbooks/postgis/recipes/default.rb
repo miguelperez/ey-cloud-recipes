@@ -2,35 +2,43 @@
 # Cookbook Name:: postgis
 # Recipe:: default
 #
-
-script "install GEOS" do
-  interpreter "bash"
-  user "root"
-  cwd "/tmp"
-  code <<-EOH
-  wget http://download.osgeo.org/geos/geos-3.2.2.tar.bz2
-  tar -xvjf geos-3.2.2.tar.bz2
-  cd geos-3.2.2
-  ./configure
-  make
-  make install
-  EOH
-  not_if "ls -la | grep geos-3.2.2"
+package "libgeos-dev" do
+  action :install
+  provider Chef::Provider::Package::Apt
 end
 
-script "install Proj4" do
-  interpreter "bash"
-  user "root"
-  cwd "/tmp"
-  code <<-EOH
-  wget ftp://ftp.remotesensing.org/proj/from_kai/PROJ.4.3.3.tar.gz
-  tar -xvzf PROJ.4.3.3.tar.gz
-  cd PROJ.4
-  ./configure
-  sh install
-  EOH
-  not_if "ls -la | grep PROJ.4.3.3"
+package "libproj-dev" do
+  action :install
+  provider Chef::Provider::Package::Apt
 end
+# script "install GEOS" do
+#   interpreter "bash"
+#   user "root"
+#   cwd "/tmp"
+#   code <<-EOH
+#   wget http://download.osgeo.org/geos/geos-3.2.2.tar.bz2
+#   tar -xvjf geos-3.2.2.tar.bz2
+#   cd geos-3.2.2
+#   ./configure
+#   make
+#   make install
+#   EOH
+#   not_if "ls -la | grep geos-3.2.2"
+# end
+# 
+# script "install Proj4" do
+#   interpreter "bash"
+#   user "root"
+#   cwd "/tmp"
+#   code <<-EOH
+#   wget ftp://ftp.remotesensing.org/proj/from_kai/PROJ.4.3.3.tar.gz
+#   tar -xvzf PROJ.4.3.3.tar.gz
+#   cd PROJ.4
+#   ./configure
+#   sh install
+#   EOH
+#   not_if "ls -la | grep PROJ.4"
+# end
 
 execute "download postgis" do
   command "cd /tmp && wget http://www.postgis.org/download/postgis-1.5.2.tar.gz"
