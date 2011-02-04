@@ -12,7 +12,8 @@
 #   provider Chef::Provider::Package::Portage
 # end
 
-package "postgis-1.5.2" do
+package "postgis" do
+  version "1.5.2"
   action :install
   provider Chef::Provider::Package::Portage
 end
