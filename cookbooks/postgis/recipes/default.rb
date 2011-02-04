@@ -32,8 +32,8 @@
 #   user "root"
 #   cwd "/tmp"
 #   code <<-EOH
-#   wget ftp://ftp.remotesensing.org/proj/from_kai/PROJ.4.3.3.tar.gz
-#   tar -xvzf PROJ.4.3.3.tar.gz
+#   wget http://download.osgeo.org/proj/proj-4.7.0.tar.gz
+#   tar -xvzf PROJ.4.7.0.tar.gz
 #   cd PROJ.4
 #   ./configure
 #   sh install
