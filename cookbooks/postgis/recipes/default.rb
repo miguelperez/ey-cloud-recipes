@@ -12,23 +12,6 @@
 #   provider Chef::Provider::Package::Portage
 # end
 
-package "geos" do
-  version "3.2"
-  action :install
-  provider Chef::Provider::Package::Portage
-end
-
-package "proj" do
-  version "4.6.0"
-  action :install
-  provider Chef::Provider::Package::Portage
-end
-
-package "postgis" do
-  version "1.5.2"
-  action :install
-  provider Chef::Provider::Package::Portage
-end
 # script "install GEOS" do
 #   interpreter "bash"
 #   user "root"
@@ -77,16 +60,32 @@ end
 #   EOH
 # end
 
+script "install postgis"do
+  interpreter "bash"
+  user "root"
+  code "emerge -u postgis"
+end
+
+ey_cloud_report "postgis" do
+  message "Postgis installation finished"
+end
+
+
 execute "restart-postgres" do
   command "/etc/init.d/postgresql-8.3 restart"
   action :run
   not_if "/etc/init.d/postgresql-8.3 status | grep -q start"
 end
 
+
+ey_cloud_report "postgis" do
+  message "Postgres restarted"
+end
+
+
 script "create Postgis template" do
   interpreter "bash"
   user "root"
-  cwd "/tmp"
   code <<-EOH  
   # Set postgis-1.5 path.
   POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
@@ -116,6 +115,7 @@ script "create Postgis template" do
   EOH
 end
 
+
 ey_cloud_report "postgis" do
-  message "Postgis installation finished"
+  message "creating postgis template"
 end
