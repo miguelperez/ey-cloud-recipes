@@ -12,6 +12,18 @@
 #   provider Chef::Provider::Package::Portage
 # end
 
+package "geos" do
+  version "3.2"
+  action :install
+  provider Chef::Provider::Package::Portage
+end
+
+package "proj" do
+  version "4.6.0"
+  action :install
+  provider Chef::Provider::Package::Portage
+end
+
 package "postgis" do
   version "1.5.2"
   action :install
