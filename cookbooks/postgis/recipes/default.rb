@@ -2,12 +2,19 @@
 # Cookbook Name:: postgis
 # Recipe:: default
 #
-package "libgeos-dev" do
-  action :install
-end
+# package "libgeos-dev" do
+#   action :install
+#   provider Chef::Provider::Package::Portage
+# end
+# 
+# package "libproj-dev" do
+#   action :install
+#   provider Chef::Provider::Package::Portage
+# end
 
-package "libproj-dev" do
+package "postgis-1.5.2" do
   action :install
+  provider Chef::Provider::Package::Portage
 end
 # script "install GEOS" do
 #   interpreter "bash"
@@ -38,24 +45,24 @@ end
 #   not_if "ls -la | grep PROJ.4"
 # end
 
-execute "download postgis" do
-  command "cd /tmp && wget http://www.postgis.org/download/postgis-1.5.2.tar.gz"
-  action :run
-  not_if "ls -la | grep postgis-1.5.2"
-end
-
-script "install Postgis" do
-  interpreter "bash"
-  user "root"
-  cwd "/tmp"
-  code <<-EOH
-  tar -xvzf postgis-1.5.2.tar.gz
-  cd postgis-1.5.2
-  ./configure
-  make
-  make install
-  EOH
-end
+# execute "download postgis" do
+#   command "cd /tmp && wget http://www.postgis.org/download/postgis-1.5.2.tar.gz"
+#   action :run
+#   not_if "ls -la | grep postgis-1.5.2"
+# end
+# 
+# script "install Postgis" do
+#   interpreter "bash"
+#   user "root"
+#   cwd "/tmp"
+#   code <<-EOH
+#   tar -xvzf postgis-1.5.2.tar.gz
+#   cd postgis-1.5.2
+#   ./configure
+#   make
+#   make install
+#   EOH
+# end
 
 execute "restart-postgres" do
   command "/etc/init.d/postgresql-8.3 restart"
