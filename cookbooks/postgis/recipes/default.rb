@@ -4,12 +4,10 @@
 #
 package "libgeos-dev" do
   action :install
-  provider Chef::Provider::Package::Apt
 end
 
 package "libproj-dev" do
   action :install
-  provider Chef::Provider::Package::Apt
 end
 # script "install GEOS" do
 #   interpreter "bash"
