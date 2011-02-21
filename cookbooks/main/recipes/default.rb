@@ -4,6 +4,9 @@
 #  }
 #end
 
+# uncomment if you want to run config_files recipe
+require_recipe "config_files"
+
 # uncomment if you want to run postgres recipe
 require_recipe 'postgres'
 
@@ -17,7 +20,7 @@ require_recipe 'postgres'
 # require_recipe "mbari-ruby"
 
 # uncomment to turn on thinking sphinx/ultra sphinx. Remember to edit cookbooks/sphinx/recipes/default.rb first!
-# require_recipe "sphinx"
+require_recipe "sphinx"
 
 #uncomment to turn on memcached
 # require_recipe "memcached"

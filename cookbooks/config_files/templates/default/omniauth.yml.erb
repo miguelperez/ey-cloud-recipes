@@ -1,0 +1,13 @@
+facebook:
+  staging:
+    token: <%= @facebook[:token] %>
+    secret: <%= @facebook[:secret] %>
+  production:
+    <<: *staging
+
+twitter:
+  staging:
+    token: <%= @twitter[:token] %>
+    secret: <%= @twitter[:secret] %>
+  production:
+    <<: *staging
