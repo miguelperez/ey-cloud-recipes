@@ -6,7 +6,7 @@ require 'pp'
 #
 if node[:instance_role] == 'db_master'
   postgres_root    = '/var/lib/postgresql'
-  postgres_version = '9.0.2'
+  postgres_version = '9.0'
 
   directory '/db/postgresql' do
     owner 'postgres'
