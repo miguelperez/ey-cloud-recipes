@@ -2,6 +2,7 @@
 # Cookbook Name:: config_files
 # Recipe:: default
 #
+app_name = "rfspotcube"
 
 template "/data/#{app_name}/shared/config/omniauth.yml" do
   owner node[:owner_name]
