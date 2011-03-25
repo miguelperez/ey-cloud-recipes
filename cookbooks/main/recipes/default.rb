@@ -8,7 +8,8 @@
 require_recipe "config_files"
 
 # uncomment if you want to run postgres recipe
-require_recipe "postgresql9::default"
+#require_recipe "postgresql9::default"
+require_recipe "postgresql"
 
 # uncomment if you want to run postgis recipe
 #require_recipe 'postgis'
