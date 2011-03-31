@@ -8,8 +8,8 @@
 require_recipe "config_files"
 
 # uncomment if you want to run postgres recipe
-require_recipe "postgresql9::default"
-#require_recipe "postgres"
+# require_recipe "postgresql9::default"
+ require_recipe "postgres"
 
 # uncomment if you want to run postgis recipe
 #require_recipe 'postgis'
@@ -21,7 +21,7 @@ require_recipe "postgresql9::default"
 # require_recipe "mbari-ruby"
 
 # uncomment to turn on thinking sphinx/ultra sphinx. Remember to edit cookbooks/sphinx/recipes/default.rb first!
-# require_recipe "sphinx"
+ require_recipe "sphinx"
 
 #uncomment to turn on memcached
 # require_recipe "memcached"
