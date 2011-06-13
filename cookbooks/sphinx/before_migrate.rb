@@ -1,5 +1,5 @@
 # Change line #2 so we know which sphinx to monitor :)
-appname = "rfspot"
+appname = "rfspotcube"
 run "cd #{release_path}/config;ln -sfv #{shared_path}/config/sphinx.yml ."
 sudo "cd #{release_path}; rm -rf log"
 run "cd #{release_path};ln -sfv #{shared_path}/log ."
