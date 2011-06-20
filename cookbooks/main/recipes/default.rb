@@ -56,7 +56,7 @@ require_recipe "config_files"
 #require_recipe "resque"
 
 #uncomment to run the redis recipe
-require_recipe "redis"
+#require_recipe "redis"
 
 #require_recipe "logrotate"
 #
