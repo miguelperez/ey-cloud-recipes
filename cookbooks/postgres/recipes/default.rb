@@ -4,9 +4,9 @@ require 'pp'
 # Recipe:: default
 #
 #
-if node[:instance_role] == 'db_master'
+#if node[:instance_role] == 'db_master'
 # change based on engineyard's ticket => https://support.cloud.engineyard.com/requests/25732 
-#if ['solo', 'db_master' ].include?(node[:instance_role])
+if ['solo', 'db_master' ].include?(node[:instance_role])
   postgres_root    = '/var/lib/postgresql'
   postgres_version = '8.3'
 
