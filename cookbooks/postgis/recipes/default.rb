@@ -60,18 +60,22 @@
 #   EOH
 # end
 
+#configure the environment so we can use the gentoo postgis-1.5.2 ebuild
+#based on http://linuxreviews.org/gentoo/ebuilds/
+#execute "download ebuild" do
+#  command "wget "
+#  /engineyard/portage/engineyard/dev-db/postgis
+#end
+
 enable_package "dev-db/postgis" do
-  version "1.5.3"
+  version "1.5.2"
 end
 
 package "dev-db/postgis" do
-  version "1.5.3"
+  version "1.5.2"
   action :install
 end
 
-ey_cloud_report "postgis" do
-  message "Postgis installation finished"
-end
 
 # script "create Postgis template" do
 #   interpreter "bash"
