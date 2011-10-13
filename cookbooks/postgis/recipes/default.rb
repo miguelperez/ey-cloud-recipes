@@ -60,62 +60,52 @@
 #   EOH
 # end
 
-script "install postgis"do
-  interpreter "bash"
-  user "root"
-  code "emerge -u postgis"
+enable_package "dev-db/postgis" do
+  version "1.5.3"
+end
+
+package "dev-db/postgis" do
+  version "1.5.3"
+  action :install
 end
 
 ey_cloud_report "postgis" do
   message "Postgis installation finished"
 end
 
+# script "create Postgis template" do
+#   interpreter "bash"
+#   user "root"
+#   code <<-EOH  
+#   # Set postgis-1.5 path.
+#   POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
+#   
+#   # Creating the template spatial database
+#   createdb -E UTF8 -T template0 template_postgis
+#   # and add PLPGSQL language support.
+#   createlang -d template_postgis plpgsql
+#   
+#   # Loading the PostGIS SQL routines.
+#   psql -d template_postgis -f $POSTGIS_SQL_PATH/postgis.sql
+#   psql -d template_postgis -f $POSTGIS_SQL_PATH/spatial_ref_sys.sql
+#   
+#   # Enabling users to alter spatial tables.
+#   psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+#   psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
+#   psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+#   
+#   # Garbage-collect and freeze.
+#   psql -d template_postgis -c "VACUUM FULL;"
+#   psql -d template_postgis -c "VACUUM FREEZE;"
+#   
+#   # Allows non-superusers the ability to create from this template.
+#   psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
+#   psql -d postgres -c "UPDATE pg_database SET datallowconn='false' WHERE datname='template_postgis';"
+#   
+#   EOH
+# end
 
-execute "restart-postgres" do
-  command "/etc/init.d/postgresql-8.3 restart"
-  action :run
-  not_if "/etc/init.d/postgresql-8.3 status | grep -q start"
-end
-
-
-ey_cloud_report "postgis" do
-  message "Postgres restarted"
-end
-
-
-script "create Postgis template" do
-  interpreter "bash"
-  user "root"
-  code <<-EOH  
-  # Set postgis-1.5 path.
-  POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
-  
-  # Creating the template spatial database
-  createdb -E UTF8 -T template0 template_postgis
-  # and add PLPGSQL language support.
-  createlang -d template_postgis plpgsql
-  
-  # Loading the PostGIS SQL routines.
-  psql -d template_postgis -f $POSTGIS_SQL_PATH/postgis.sql
-  psql -d template_postgis -f $POSTGIS_SQL_PATH/spatial_ref_sys.sql
-  
-  # Enabling users to alter spatial tables.
-  psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
-  psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
-  psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
-  
-  # Garbage-collect and freeze.
-  psql -d template_postgis -c "VACUUM FULL;"
-  psql -d template_postgis -c "VACUUM FREEZE;"
-  
-  # Allows non-superusers the ability to create from this template.
-  psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
-  psql -d postgres -c "UPDATE pg_database SET datallowconn='false' WHERE datname='template_postgis';"
-  
-  EOH
-end
-
-
-ey_cloud_report "postgis" do
-  message "creating postgis template"
-end
+# 
+# ey_cloud_report "postgis" do
+#   message "creating postgis template"
+# end
