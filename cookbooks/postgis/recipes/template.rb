@@ -22,7 +22,6 @@ bash "creating_postgis_template" do
   psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
   psql -d postgres -c "UPDATE pg_database SET datallowconn='false' WHERE datname='template_postgis';"
   
-  touch ~/template_created
   EOH
-  not_if "test -f ~/template_created"
+  not_if "psql --list | grep template_postgis"
 end
