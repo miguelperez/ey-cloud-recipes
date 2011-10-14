@@ -1,6 +1,9 @@
 bash "creating_postgis_template" do
   user "postgres"
   code <<-EOH
+  createuser --superuser --createdb --login deploy
+  psql -d template_postgis -c "ALTER ROLE deploy WITH PASSWORD '#{node[:users].first[:password]}';"
+  
   POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
 
   createdb -E UTF8 -T template0 template_postgis
