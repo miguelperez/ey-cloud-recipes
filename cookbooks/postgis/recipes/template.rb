@@ -1,12 +1,6 @@
 bash "creating_postgis_template" do
-user "root"
+  user "postgres"
   code <<-EOH
-  ldconfig
-  
-  sudo /etc/init.d/postgresql-8.3 restart
-  
-  sudo su - postgres
-  
   POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
 
   createdb -E UTF8 -T template0 template_postgis
@@ -24,5 +18,8 @@ user "root"
 
   psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
   psql -d postgres -c "UPDATE pg_database SET datallowconn='false' WHERE datname='template_postgis';"
+  
+  touch /etc/template_created
   EOH
+  not_if "test -f /etc/template_created"
 end
