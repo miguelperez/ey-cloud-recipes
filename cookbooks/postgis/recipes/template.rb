@@ -4,6 +4,9 @@ bash "creating_postgis_template" do
   POSTGIS_SQL_PATH=`pg_config --sharedir`/contrib/postgis-1.5
 
   createdb -E UTF8 -T template0 template_postgis
+  
+  psql -d template_postgis -c "GRANT ALL PRIVILEGES ON DATABASE template_postgis to deploy;"
+  
   createlang -d template_postgis plpgsql
 
   psql -d template_postgis -f $POSTGIS_SQL_PATH/postgis.sql
@@ -19,7 +22,7 @@ bash "creating_postgis_template" do
   psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
   psql -d postgres -c "UPDATE pg_database SET datallowconn='false' WHERE datname='template_postgis';"
   
-  touch /etc/template_created
+  touch ~/template_created
   EOH
-  not_if "test -f /etc/template_created"
+  not_if "test -f ~/template_created"
 end
